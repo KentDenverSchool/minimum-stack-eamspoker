@@ -1,4 +1,5 @@
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.EmptyStackException;
@@ -8,13 +9,19 @@ public class MinStackDriver {
     public static void main(String[] args)
             throws IOException{
         Scanner s = new Scanner(System.in);
-        String results = "_________Stack Tests_________"+
+        String results = "_________MinStack Tests_________"+
                 "\n\nTests in format expected: actual: passed:true/false\n\n";
 
 
         //Tests
         // in try catch blocks so even if the test errors
         // we always write a log!
+
+        //read in new file for tests
+        File testFile = new File("tests.txt");
+
+        Scanner fr = new Scanner(testFile);
+
 
 
         results += "Empty Constructor test: \n";
@@ -23,7 +30,7 @@ public class MinStackDriver {
             //code we want to test
 
 
-           Stack st = new Stack();
+           MinStack st = new MinStack();
            results+= (st.size() == 0) + " Size should be: 0, Actual: " + st.size() +
                    "\n";
 
@@ -40,38 +47,34 @@ public class MinStackDriver {
 
         try{
             //code we want to test
-            Stack<String> pushStack = new Stack<>();
-            pushStack.push("element");
+            MinStack<Integer> pushMinStack = new MinStack<>();
+            for(int i = 0; i < 4; i++) {
+                int pushed = fr.nextInt();
+                int expectedMin = fr.nextInt();
+                fr.nextLine();
+                pushMinStack.push(pushed);
+
+                //test size after push
+                results += (pushMinStack.size() == i + 1) + " Size should be: 1, Actual: " + pushMinStack.size() +
+                        "\n";
+
+                //test isEmpty after push
+                results += (!pushMinStack.isEmpty()) + " IsEmpty should return false, Actual: " + pushMinStack.isEmpty() +
+                        "\n";
+
+                //test if min returns expected element
+                results += (pushMinStack.min().compareTo(expectedMin) == 0) + " Peek should be: \"element\", Actual: "
+                        + pushMinStack.peek() + "\n";
+
+                //test peek returns pushed element
+                results += (pushMinStack.peek().compareTo(pushed) == 0) + " Peek should be: \"element\", Actual: "
+                        + pushMinStack.peek() + "\n";
+            }
 
 
-            //test size after push
-            results+= (pushStack.size() == 1) + " Size should be: 1, Actual: " + pushStack.size() +
-                    "\n";
 
-            //test isEmpty after push
-            results+= (!pushStack.isEmpty()) + " IsEmpty should return false, Actual: " + pushStack.isEmpty() +
-                    "\n";
 
-            //test peek returns pushed element
-            results += (pushStack.peek().equals("element")) + " Peek should be: \"element\", Actual: "
-                    + pushStack.peek() + "\n";
-
-            //add another element
-            pushStack.push("element2");
-
-            //test size after 2nd push
-            results+= (pushStack.size() == 2) + " Size should be: 2, Actual: " + pushStack.size() +
-                    "\n";
-
-            //test isEmpty after 2nd push
-            results+= (!pushStack.isEmpty()) + " IsEmpty should return false, Actual: " + pushStack.isEmpty() +
-                    "\n";
-
-            //test peek returns pushed element
-            results += (pushStack.peek().equals("element2")) + " Peek should be: \"element2\", Actual: "
-                    + pushStack.peek() + "\n\n";
-
-        }catch(Exception e){
+        } catch(Exception e){
             //what happens if code throws an error
 
             results+="ERROR: " + e + "\n";
@@ -83,10 +86,10 @@ public class MinStackDriver {
         results += "\n\nPop 2 elements, check both size and IsEmpty, peek to make sure values match: \n";
         try{
             //code we want to test
-            Stack<String> popStack = new Stack<>();
-            popStack.push("one");
-            popStack.push("two");
-            String popped = popStack.pop();
+            MinStack<String> popMinStack = new MinStack<>();
+            popMinStack.push("one");
+            popMinStack.push("two");
+            String popped = popMinStack.pop();
 
 
             //pop one element, see if it returns
@@ -94,32 +97,17 @@ public class MinStackDriver {
                     "\n";
 
             //test size after pop
-            results+= (popStack.size() == 1) + " Size should be: 1, Actual: " + popStack.size() +
+            results+= (popMinStack.size() == 1) + " Size should be: 1, Actual: " + popMinStack.size() +
                     "\n";
 
             //test isEmpty after pop
-            results+= (!popStack.isEmpty()) + " IsEmpty should return false, Actual: " + popStack.isEmpty() +
+            results+= (!popMinStack.isEmpty()) + " IsEmpty should return false, Actual: " + popMinStack.isEmpty() +
                     "\n";
 
             //test peek returns pushed pop
-            results += (popStack.peek().equals("one")) + " Peek should be: \"one\", Actual: "
-                    + popStack.peek() +"\n";
+            results += (popMinStack.peek().equals("one")) + " Peek should be: \"one\", Actual: "
+                    + popMinStack.peek() +"\n";
 
-            //remove another element
-            popped = popStack.pop();
-
-
-            //pop one element, see if it returns
-            results+= (popped.equals("one")) + " Popped element should be: \"one\", Actual: " + popped +
-                    "\n";
-
-            //test size after 2nd pop
-            results+= (popStack.size() == 0) + " Size should be: 0, Actual: " + popStack.size() +
-                    "\n";
-
-            //test isEmpty after 2nd pop
-            results+= (popStack.isEmpty()) + " IsEmpty should return true, Actual: " + popStack.isEmpty() +
-                    "\n";
         } catch(Exception e){
             //what happens if code throws an error
 
@@ -127,22 +115,22 @@ public class MinStackDriver {
 
         }
 
-        results += "\n\nCatching empty stack exceptions: \n";
+        results += "\n\nCatching empty MinStack exceptions: \n";
 
         try{
             //code we want to test
-            Stack<String> exceptionStack = new Stack<>();
-            exceptionStack.push("one");
-            exceptionStack.pop();
+            MinStack<String> exceptionMinStack = new MinStack<>();
+            exceptionMinStack.push("one");
+            exceptionMinStack.pop();
 
-            //try to pop from an empty stack
-            exceptionStack.pop();
-            results += "ERROR: Popped from an empty stack\n";
+            //try to pop from an empty MinStack
+            exceptionMinStack.pop();
+            results += "ERROR: Popped from an empty MinStack\n";
 
         } catch(Exception e){
             //check if it's the right exception
             if(e instanceof EmptyStackException) {
-                results += "true Caught empty stack exception for pop\n";
+                results += "true Caught empty MinStack exception for pop\n";
             } else {
                 results += "ERROR: " + e + "\n";
             }
@@ -151,16 +139,16 @@ public class MinStackDriver {
 
         try{
             //code we want to test
-            Stack<String> exceptionStack = new Stack<>();
+            MinStack<String> exceptionMinStack = new MinStack<>();
 
-            //try to peek at an empty stack
-            exceptionStack.peek();
-            results += "ERROR: Peeked at an empty stack\n";
+            //try to peek at an empty MinStack
+            exceptionMinStack.peek();
+            results += "ERROR: Peeked at an empty MinStack\n";
 
         } catch(Exception e){
             //what happens if code throws an error
             if(e instanceof EmptyStackException) {
-                results += "true Caught empty stack exception for peek\n";
+                results += "true Caught empty MinStack exception for peek\n";
             } else {
                 results += "ERROR: " + e + "\n";
             }
