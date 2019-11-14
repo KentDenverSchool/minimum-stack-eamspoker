@@ -1,4 +1,5 @@
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.EmptyStackException;
@@ -8,13 +9,19 @@ public class MinStackDriver {
     public static void main(String[] args)
             throws IOException{
         Scanner s = new Scanner(System.in);
-        String results = "_________Stack Tests_________"+
+        String results = "_________MinStack Tests_________"+
                 "\n\nTests in format expected: actual: passed:true/false\n\n";
 
 
         //Tests
         // in try catch blocks so even if the test errors
         // we always write a log!
+
+        //read in new file for tests
+        File testFile = new File("tests.txt");
+
+        Scanner fr = new Scanner(testFile);
+
 
 
         results += "Empty Constructor test: \n";
@@ -23,9 +30,11 @@ public class MinStackDriver {
             //code we want to test
 
 
-           Stack st = new Stack();
+           MinStack st = new MinStack();
            results+= (st.size() == 0) + " Size should be: 0, Actual: " + st.size() +
-                   "\n";
+                    "\n";
+            results+= (st.isEmpty()) + " IsEmpty should be: true, Actual: " + st.isEmpty() +
+                    "\n";
 
 
         } catch(Exception e){
@@ -35,109 +44,120 @@ public class MinStackDriver {
 
         }
 
-        //push/size/isEmpty test
-        results += "\nPush 2 elements, check both size and IsEmpty, peek to make sure values match: \n";
+        int keepGoing = 0;
 
-        try{
-            //code we want to test
-            Stack<String> pushStack = new Stack<>();
-            pushStack.push("element");
+        //create min stack for peek and pop tests
+        MinStack testMinStack = new MinStack();
+
+        //loop for peek and pop tests, two settings: one for pop and one for push
+        while(fr.hasNextLine() && keepGoing < 2) {
+            String nextLine = fr.nextLine();
+        //test.txt format: element expectedMin expectedSize expectedEmpty, \n in between sets of tests (push and pop)
+            String element;
+            String expectedMin;
+            String expectedSize;
+            String expectedEmpty;
+
+            //if there's a break, count up
+            if(nextLine.equals("")) {
+                keepGoing++;
+            } else {
+                String[] nums = nextLine.split(" ");
+                element = nums[0];
+                expectedMin = nums[1];
+                expectedSize = nums[2];
+                expectedEmpty = nums[3];
 
 
-            //test size after push
-            results+= (pushStack.size() == 1) + " Size should be: 1, Actual: " + pushStack.size() +
-                    "\n";
+                results += "\nElement: " + element + " min: " + expectedMin + " size: " + expectedSize + " empty: " +
+                        expectedEmpty;
 
-            //test isEmpty after push
-            results+= (!pushStack.isEmpty()) + " IsEmpty should return false, Actual: " + pushStack.isEmpty() +
-                    "\n";
 
-            //test peek returns pushed element
-            results += (pushStack.peek().equals("element")) + " Peek should be: \"element\", Actual: "
-                    + pushStack.peek() + "\n";
+                if (keepGoing == 0) {
+                    //push/size/isEmpty test --> reading in an element to push, an expected min, isEmpty, and size
+                    results += "\n\nPush elements from file, check both size and IsEmpty, peek to make sure values " +
+                            "match: " + "\n";
 
-            //add another element
-            pushStack.push("element2");
+                    try {
+                        //code we want to test
 
-            //test size after 2nd push
-            results+= (pushStack.size() == 2) + " Size should be: 2, Actual: " + pushStack.size() +
-                    "\n";
 
-            //test isEmpty after 2nd push
-            results+= (!pushStack.isEmpty()) + " IsEmpty should return false, Actual: " + pushStack.isEmpty() +
-                    "\n";
+                        testMinStack.push(element);
 
-            //test peek returns pushed element
-            results += (pushStack.peek().equals("element2")) + " Peek should be: \"element2\", Actual: "
-                    + pushStack.peek() + "\n\n";
+                        //test peek returns pushed element
+                        results += (testMinStack.peek().compareTo(element) == 0) + " Peek should be: " + element +
+                                " Actual: " + testMinStack.peek() + "\n";
 
-        }catch(Exception e){
-            //what happens if code throws an error
+                        //test if min returns expected element
+                        results += (testMinStack.min().compareTo(expectedMin) == 0) + " min should be: " + expectedMin +
+                                ", " + " Actual: " + testMinStack.min() + "\n";
 
-            results+="ERROR: " + e + "\n";
+                        //test size after push
+                        results += ((testMinStack.size() + "").equals(expectedSize)) + " Size should be: " +
+                                expectedSize + " Actual: " + testMinStack.size() + "\n";
 
+                        //test isEmpty after push
+                        results += ((testMinStack.isEmpty() + "").equals(expectedEmpty)) + " IsEmpty should return " +
+                                expectedEmpty + " Actual: " + testMinStack.isEmpty() + "\n";
+
+                    } catch (Exception e) {
+                        //what happens if code throws an error
+
+                        results += "ERROR: " + e + "\n";
+
+                    }
+
+                } else if (keepGoing == 1) {
+                    //reading in an element to pop, an expected min, and an expected peek value 3 times
+                    results += "\n\nPop elements from stack, check both size and IsEmpty, peek to make sure values " +
+                            "match: " + "\n";
+                    try {
+
+                        Comparable popped = testMinStack.pop();
+
+                        //test if pop returns expected element
+                        results += (popped.compareTo(element) == 0) + " popped should be: " + element + ", " +
+                                "Actual: " + popped + "\n";
+
+                        if (!testMinStack.isEmpty()) {
+                            //test if min returns expected element
+                            results += (testMinStack.min().compareTo(expectedMin) == 0) + " min should be: " +
+                                    expectedMin + ", " + "Actual: " + testMinStack.min() + "\n";
+                        }
+
+                        //test size after pop
+                        results += ((testMinStack.size() + "").equals(expectedSize)) + " Size should be: " +
+                                expectedSize + " Actual: " + testMinStack.size() + "\n";
+
+                        //test isEmpty after pop
+                        results += ((testMinStack.isEmpty() + "").equals(expectedEmpty)) + " IsEmpty should return " +
+                                expectedEmpty + " Actual: " + testMinStack.isEmpty() + "\n";
+
+
+                    } catch (Exception e) {
+                        //what happens if code throws an error
+
+                        results += "ERROR: " + e + "\n";
+
+                    }
+
+                }
+            }
         }
 
 
-        //test peek/pop/size/isEmpty
-        results += "\n\nPop 2 elements, check both size and IsEmpty, peek to make sure values match: \n";
-        try{
-            //code we want to test
-            Stack<String> popStack = new Stack<>();
-            popStack.push("one");
-            popStack.push("two");
-            String popped = popStack.pop();
-
-
-            //pop one element, see if it returns
-            results+= (popped.equals("two")) + " Popped element should be: \"two\", Actual: " + popped +
-                    "\n";
-
-            //test size after pop
-            results+= (popStack.size() == 1) + " Size should be: 1, Actual: " + popStack.size() +
-                    "\n";
-
-            //test isEmpty after pop
-            results+= (!popStack.isEmpty()) + " IsEmpty should return false, Actual: " + popStack.isEmpty() +
-                    "\n";
-
-            //test peek returns pushed pop
-            results += (popStack.peek().equals("one")) + " Peek should be: \"one\", Actual: "
-                    + popStack.peek() +"\n";
-
-            //remove another element
-            popped = popStack.pop();
-
-
-            //pop one element, see if it returns
-            results+= (popped.equals("one")) + " Popped element should be: \"one\", Actual: " + popped +
-                    "\n";
-
-            //test size after 2nd pop
-            results+= (popStack.size() == 0) + " Size should be: 0, Actual: " + popStack.size() +
-                    "\n";
-
-            //test isEmpty after 2nd pop
-            results+= (popStack.isEmpty()) + " IsEmpty should return true, Actual: " + popStack.isEmpty() +
-                    "\n";
-        } catch(Exception e){
-            //what happens if code throws an error
-
-            results+="ERROR: " + e + "\n";
-
-        }
-
-        results += "\n\nCatching empty stack exceptions: \n";
+        //trying to catch exceptions
+        results += "\n\nCatching empty MinStack exceptions: \n";
 
         try{
             //code we want to test
-            Stack<String> exceptionStack = new Stack<>();
-            exceptionStack.push("one");
-            exceptionStack.pop();
+            MinStack exceptionMinStack = new MinStack();
+            exceptionMinStack.push("one");
+            exceptionMinStack.pop();
 
-            //try to pop from an empty stack
-            exceptionStack.pop();
-            results += "ERROR: Popped from an empty stack\n";
+            //try to pop from an empty MinStack
+            exceptionMinStack.pop();
+            results += "ERROR: Popped from an empty MinStack\n";
 
         } catch(Exception e){
             //check if it's the right exception
@@ -151,14 +171,14 @@ public class MinStackDriver {
 
         try{
             //code we want to test
-            Stack<String> exceptionStack = new Stack<>();
+            MinStack exceptionMinStack = new MinStack();
 
-            //try to peek at an empty stack
-            exceptionStack.peek();
-            results += "ERROR: Peeked at an empty stack\n";
+            //try to peek at an empty MinStack
+            exceptionMinStack.peek();
+            results += "ERROR: Peeked at an empty MinStack\n";
 
         } catch(Exception e){
-            //what happens if code throws an error
+            //check if it's the right exception
             if(e instanceof EmptyStackException) {
                 results += "true Caught empty stack exception for peek\n";
             } else {
