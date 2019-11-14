@@ -42,79 +42,105 @@ public class MinStackDriver {
 
         }
 
-        //push/size/isEmpty test
-        results += "\nPush 2 elements, check both size and IsEmpty, peek to make sure values match: \n";
+        int keepGoing = 0;
 
-        try{
-            //code we want to test
-            MinStack<Integer> pushMinStack = new MinStack<>();
-            for(int i = 0; i < 4; i++) {
-                int pushed = fr.nextInt();
-                int expectedMin = fr.nextInt();
-                fr.nextLine();
-                pushMinStack.push(pushed);
 
-                //test size after push
-                results += (pushMinStack.size() == i + 1) + " Size should be: 1, Actual: " + pushMinStack.size() +
-                        "\n";
+        //loop for peek and pop tests
+        while(keepGoing < 2) {
+            String nextLine = fr.nextLine();
+        //test.txt format: element expectedMin expectedSize expectedEmpty, \n in between sets of tests (push and pop)
+            String element = "";
+            String expectedMin = "";
+            String expectedSize = "";
+            String expectedEmpty = "";
 
-                //test isEmpty after push
-                results += (!pushMinStack.isEmpty()) + " IsEmpty should return false, Actual: " + pushMinStack.isEmpty() +
-                        "\n";
-
-                //test if min returns expected element
-                results += (pushMinStack.min().compareTo(expectedMin) == 0) + " Peek should be: \"element\", Actual: "
-                        + pushMinStack.peek() + "\n";
-
-                //test peek returns pushed element
-                results += (pushMinStack.peek().compareTo(pushed) == 0) + " Peek should be: \"element\", Actual: "
-                        + pushMinStack.peek() + "\n";
+            if(nextLine.equals("")) {
+                keepGoing++;
+            } else {
+                String[] nums = nextLine.split(" ");
+                element = nums[0];
+                expectedMin = nums[1];
+                expectedSize = nums[2];
+                expectedEmpty = nums[3];
             }
 
 
 
+            if(keepGoing == 0) {
+                //push/size/isEmpty test --> reading in an element to push, an expected min, isEmpty, and size
+                results += "\n\nPush elements from file, check both size and IsEmpty, peek to make sure values match: "
+                        + "\n";
 
-        } catch(Exception e){
-            //what happens if code throws an error
+                try {
+                    //code we want to test
+                    MinStack<String> pushMinStack = new MinStack<>();
 
-            results+="ERROR: " + e + "\n";
+                    pushMinStack.push(element);
 
+                    //test size after push
+                    results += ((pushMinStack.size() + "").equals(expectedSize)) + " Size should be: " + expectedSize +
+                            " Actual: " + pushMinStack.size() + "\n";
+
+                    //test isEmpty after push
+                    results += ((pushMinStack.isEmpty() + "").equals(expectedEmpty)) + " IsEmpty should return " +
+                            expectedEmpty + "Actual: " + pushMinStack.isEmpty() + "\n";
+
+                    //test if min returns expected element
+                    results += (pushMinStack.min().compareTo(expectedMin) == 0) + " min should be: " + expectedMin +
+                            ", " + "Actual: " + pushMinStack.min() + "\n";
+
+                    //test peek returns pushed element
+                    results += (pushMinStack.peek().compareTo(element) == 0) + " Peek should be: " + expectedMin +
+                            "Actual: " + pushMinStack.peek() + "\n";
+
+                } catch (Exception e) {
+                    //what happens if code throws an error
+
+                    results += "ERROR: " + e + "\n";
+
+                }
+
+            } else if(keepGoing == 1) {
+                //reading in an element to pop, an expected min, and an expected peek value 3 times
+                results += "\n\nPop elements from file, check both size and IsEmpty, peek to make sure values match: \n";
+                try {
+                    MinStack<Integer> popMinStack = new MinStack<>();
+                    Comparable popped = popMinStack.pop();
+
+                    //test if pop returns expected element
+                    results += (popped.compareTo(element) == 0) + " popped should be: " + element + ", " +
+                            "Actual: " + popped + "\n";
+
+                    //test size after pop
+                    results += ((popMinStack.size() + "").equals(expectedSize)) + " Size should be: " + expectedSize + " Actual: " +
+                            popMinStack.size() + "\n";
+
+                    //test isEmpty after pop
+                    results += ((popMinStack.isEmpty() + "").equals(expectedEmpty)) + " IsEmpty should return " + expectedEmpty +
+                            "Actual: " + popMinStack.isEmpty() + "\n";
+
+                    //test if min returns expected element
+                    results += (popMinStack.min().compareTo(expectedMin) == 0) + " min should be: " + expectedMin + ", " +
+                            "Actual: " + popMinStack.min() + "\n";
+
+                    //test peek returns pushed element
+                    results += (popMinStack.peek().compareTo(element) == 0) + " Peek should be: " +
+                            element + "Actual: " + popMinStack.peek() + "\n";
+
+                } catch (Exception e) {
+                    //what happens if code throws an error
+
+                    results += "ERROR: " + e + "\n";
+
+                }
+
+            } else {
+                keepGoing++;
+            }
         }
 
 
-        //test peek/pop/size/isEmpty
-        results += "\n\nPop 2 elements, check both size and IsEmpty, peek to make sure values match: \n";
-        try{
-            //code we want to test
-            MinStack<String> popMinStack = new MinStack<>();
-            popMinStack.push("one");
-            popMinStack.push("two");
-            String popped = popMinStack.pop();
-
-
-            //pop one element, see if it returns
-            results+= (popped.equals("two")) + " Popped element should be: \"two\", Actual: " + popped +
-                    "\n";
-
-            //test size after pop
-            results+= (popMinStack.size() == 1) + " Size should be: 1, Actual: " + popMinStack.size() +
-                    "\n";
-
-            //test isEmpty after pop
-            results+= (!popMinStack.isEmpty()) + " IsEmpty should return false, Actual: " + popMinStack.isEmpty() +
-                    "\n";
-
-            //test peek returns pushed pop
-            results += (popMinStack.peek().equals("one")) + " Peek should be: \"one\", Actual: "
-                    + popMinStack.peek() +"\n";
-
-        } catch(Exception e){
-            //what happens if code throws an error
-
-            results+="ERROR: " + e + "\n";
-
-        }
-
+        //trying to catch exceptions
         results += "\n\nCatching empty MinStack exceptions: \n";
 
         try{
@@ -130,7 +156,7 @@ public class MinStackDriver {
         } catch(Exception e){
             //check if it's the right exception
             if(e instanceof EmptyStackException) {
-                results += "true Caught empty MinStack exception for pop\n";
+                results += "true Caught empty stack exception for pop\n";
             } else {
                 results += "ERROR: " + e + "\n";
             }
@@ -146,9 +172,9 @@ public class MinStackDriver {
             results += "ERROR: Peeked at an empty MinStack\n";
 
         } catch(Exception e){
-            //what happens if code throws an error
+            //check if it's the right exception
             if(e instanceof EmptyStackException) {
-                results += "true Caught empty MinStack exception for peek\n";
+                results += "true Caught empty stack exception for peek\n";
             } else {
                 results += "ERROR: " + e + "\n";
             }
