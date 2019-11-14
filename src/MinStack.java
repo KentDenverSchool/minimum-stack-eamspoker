@@ -1,3 +1,12 @@
+/*
+ * MinStack.java
+ * This class creates a stack where you can push, pop, and peek elements. It has two instance data, stack for all the
+ * data, and a stack for minimums. Also has a method that returns whether or not the stack is empty, and a method
+ * that returns the minimum value of the stack.
+ * Date: 10/08/19
+ * On my honor: EA
+ */
+
 public class MinStack {
     private Stack<Comparable> stack;
     private Stack<Comparable> min;

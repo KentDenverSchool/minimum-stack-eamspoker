@@ -46,17 +46,19 @@ public class MinStackDriver {
 
         int keepGoing = 0;
 
+        //create min stack for peek and pop tests
         MinStack testMinStack = new MinStack();
 
-        //loop for peek and pop tests
+        //loop for peek and pop tests, two settings: one for pop and one for push
         while(fr.hasNextLine() && keepGoing < 2) {
             String nextLine = fr.nextLine();
         //test.txt format: element expectedMin expectedSize expectedEmpty, \n in between sets of tests (push and pop)
-            String element = "";
-            String expectedMin = "";
-            String expectedSize = "";
-            String expectedEmpty = "";
+            String element;
+            String expectedMin;
+            String expectedSize;
+            String expectedEmpty;
 
+            //if there's a break, count up
             if(nextLine.equals("")) {
                 keepGoing++;
             } else {
@@ -73,8 +75,8 @@ public class MinStackDriver {
 
                 if (keepGoing == 0) {
                     //push/size/isEmpty test --> reading in an element to push, an expected min, isEmpty, and size
-                    results += "\n\nPush elements from file, check both size and IsEmpty, peek to make sure values match: "
-                            + "\n";
+                    results += "\n\nPush elements from file, check both size and IsEmpty, peek to make sure values " +
+                            "match: " + "\n";
 
                     try {
                         //code we want to test
@@ -91,8 +93,8 @@ public class MinStackDriver {
                                 ", " + " Actual: " + testMinStack.min() + "\n";
 
                         //test size after push
-                        results += ((testMinStack.size() + "").equals(expectedSize)) + " Size should be: " + expectedSize +
-                                " Actual: " + testMinStack.size() + "\n";
+                        results += ((testMinStack.size() + "").equals(expectedSize)) + " Size should be: " +
+                                expectedSize + " Actual: " + testMinStack.size() + "\n";
 
                         //test isEmpty after push
                         results += ((testMinStack.isEmpty() + "").equals(expectedEmpty)) + " IsEmpty should return " +
@@ -107,8 +109,8 @@ public class MinStackDriver {
 
                 } else if (keepGoing == 1) {
                     //reading in an element to pop, an expected min, and an expected peek value 3 times
-                    results += "\n\nPop elements from stack, check both size and IsEmpty, peek to make sure values match: "
-                            + "\n";
+                    results += "\n\nPop elements from stack, check both size and IsEmpty, peek to make sure values " +
+                            "match: " + "\n";
                     try {
 
                         Comparable popped = testMinStack.pop();
@@ -119,13 +121,13 @@ public class MinStackDriver {
 
                         if (!testMinStack.isEmpty()) {
                             //test if min returns expected element
-                            results += (testMinStack.min().compareTo(expectedMin) == 0) + " min should be: " + expectedMin +
-                                    ", " + "Actual: " + testMinStack.min() + "\n";
+                            results += (testMinStack.min().compareTo(expectedMin) == 0) + " min should be: " +
+                                    expectedMin + ", " + "Actual: " + testMinStack.min() + "\n";
                         }
 
                         //test size after pop
-                        results += ((testMinStack.size() + "").equals(expectedSize)) + " Size should be: " + expectedSize +
-                                " Actual: " + testMinStack.size() + "\n";
+                        results += ((testMinStack.size() + "").equals(expectedSize)) + " Size should be: " +
+                                expectedSize + " Actual: " + testMinStack.size() + "\n";
 
                         //test isEmpty after pop
                         results += ((testMinStack.isEmpty() + "").equals(expectedEmpty)) + " IsEmpty should return " +
