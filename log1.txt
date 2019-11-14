@@ -1,0 +1,55 @@
+_________MinStack Tests_________
+
+Tests in format expected: actual: passed:true/false
+
+Empty Constructor test: 
+ERROR: java.lang.NullPointerException
+
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.lang.NullPointerException
+
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.lang.NullPointerException
+
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.lang.NullPointerException
+
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.lang.NullPointerException
+
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.lang.NullPointerException
+
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.lang.NullPointerException
+
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.lang.NullPointerException
+
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.lang.NullPointerException
+
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.lang.NullPointerException
+
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.lang.NullPointerException
+
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.lang.NullPointerException
+
+
+Catching empty MinStack exceptions: 
+ERROR: java.lang.NullPointerException
+ERROR: java.lang.NullPointerException

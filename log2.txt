@@ -1,0 +1,71 @@
+_________MinStack Tests_________
+
+Tests in format expected: actual: passed:true/false
+
+Empty Constructor test: 
+true Size should be: 0, Actual: 0
+true IsEmpty should be: true, Actual: true
+
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+true Peek should be: 3Actual: 3
+true min should be: 3, Actual: 3
+true Size should be: 1 Actual: 1
+true IsEmpty should return falseActual: false
+
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+true Peek should be: 2Actual: 2
+true min should be: 2, Actual: 2
+false Size should be: 2 Actual: 1
+true IsEmpty should return falseActual: false
+
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+true Peek should be: 2Actual: 5
+false min should be: 2, Actual: 5
+false Size should be: 3 Actual: 1
+true IsEmpty should return falseActual: false
+
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+true Peek should be: 2Actual: 7
+false min should be: 2, Actual: 7
+false Size should be: 4 Actual: 1
+true IsEmpty should return falseActual: false
+
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+true Peek should be: 1Actual: 1
+true min should be: 1, Actual: 1
+false Size should be: 5 Actual: 1
+true IsEmpty should return falseActual: false
+
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.util.EmptyStackException
+
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.util.EmptyStackException
+
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.util.EmptyStackException
+
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.util.EmptyStackException
+
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.util.EmptyStackException
+
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.util.EmptyStackException
+
+
+Catching empty MinStack exceptions: 
+true Caught empty stack exception for pop
+true Caught empty stack exception for peek

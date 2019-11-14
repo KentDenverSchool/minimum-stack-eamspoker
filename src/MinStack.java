@@ -1,7 +1,12 @@
-public class MinStack<E> {
-    private int size;
+public class MinStack {
     private Stack<Comparable> stack;
     private Stack<Comparable> min;
+
+    public MinStack(){
+        stack = new Stack<>();
+        min = new Stack<>();
+
+    }
 
     //returns void, takes in an element and puts it at the top of the stack, and if it is min, puts it in the min stack
     public void push(Comparable element){

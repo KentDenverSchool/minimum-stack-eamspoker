@@ -1,0 +1,96 @@
+_________MinStack Tests_________
+
+Tests in format expected: actual: passed:true/false
+
+Empty Constructor test: 
+true Size should be: 0, Actual: 0
+true IsEmpty should be: true, Actual: true
+
+Element: 3 min: 3 size: 1 empty: false
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+true Peek should be: 3 Actual: 3
+true min should be: 3,  Actual: 3
+true Size should be: 1 Actual: 1
+true IsEmpty should return false Actual: false
+
+Element: 2 min: 2 size: 2 empty: false
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+true Peek should be: 2 Actual: 2
+true min should be: 2,  Actual: 2
+true Size should be: 2 Actual: 2
+true IsEmpty should return false Actual: false
+
+Element: 5 min: 2 size: 3 empty: false
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+true Peek should be: 5 Actual: 5
+true min should be: 2,  Actual: 2
+true Size should be: 3 Actual: 3
+true IsEmpty should return false Actual: false
+
+Element: 7 min: 2 size: 4 empty: false
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+true Peek should be: 7 Actual: 7
+true min should be: 2,  Actual: 2
+true Size should be: 4 Actual: 4
+true IsEmpty should return false Actual: false
+
+Element: 1 min: 1 size: 5 empty: false
+
+Push elements from file, check both size and IsEmpty, peek to make sure values match: 
+true Peek should be: 1 Actual: 1
+true min should be: 1,  Actual: 1
+true Size should be: 5 Actual: 5
+true IsEmpty should return false Actual: false
+
+Element:  min:  size:  empty: 
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+false popped should be: , Actual: 1
+false min should be: , Actual: 2
+false Size should be:  Actual: 4
+false IsEmpty should return  Actual: false
+
+Element: 1 min: 2 size: 4 empty: false
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+false popped should be: 1, Actual: 7
+true min should be: 2, Actual: 2
+false Size should be: 4 Actual: 3
+true IsEmpty should return false Actual: false
+
+Element: 7 min: 2 size: 3 empty: false
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+false popped should be: 7, Actual: 5
+true min should be: 2, Actual: 2
+false Size should be: 3 Actual: 2
+true IsEmpty should return false Actual: false
+
+Element: 5 min: 2 size: 2 empty: false
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+false popped should be: 5, Actual: 2
+false min should be: 2, Actual: 3
+false Size should be: 2 Actual: 1
+true IsEmpty should return false Actual: false
+
+Element: 2 min: 3 size: 3 empty: false
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+false popped should be: 2, Actual: 3
+false Size should be: 3 Actual: 0
+false IsEmpty should return false Actual: true
+
+Element: 3 min: e size: 0 empty: true
+
+Pop elements from stack, check both size and IsEmpty, peek to make sure values match: 
+ERROR: java.util.EmptyStackException
+
+
+Catching empty MinStack exceptions: 
+true Caught empty stack exception for pop
+true Caught empty stack exception for peek
